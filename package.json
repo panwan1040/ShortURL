@@ -1,0 +1,28 @@
+{
+  "name": "shorturl",
+  "version": "1.0.0",
+  "description": "test syn",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "play": "nodemon ./pages/index.ejs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/panwan1040/ShortURL.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/panwan1040/ShortURL/issues"
+  },
+  "homepage": "https://github.com/panwan1040/ShortURL#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "mongodb": "^4.11.0",
+    "nodemon": "^2.0.20"
+  }
+}
