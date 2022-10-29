@@ -1,52 +1,58 @@
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose')
+const ShortUrlmodel = require('./models/shortUrl')
 const express = require("express")
 const app = express()
 require('dotenv').config()
 port = process.env.PORT
 dburl = process.env.DBURL
-
+app.use(express.urlencoded({ extended: false }))
 app.set('view engine','ejs')
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(__dirname + '/public'));
 
-data = { 
-    texturl: "",
-    isurl:false
-}
+mongoose.connect(dburl, {useNewUrlParser: true, useUnifiedTopology: true})
 
-app.get('/',(req,res)=>{
-    res.render('./pages/index.ejs',data);
+
+
+shortlink = ""
+
+app.get('/',async(req,res)=>{
+    // const shortUrls = await ShortUrlmodel.find()
+    res.render('./index.ejs',{shortUrls : ""});
     // res.render("./index")
 })
 
-app.post('/generator',(req,res)=>{
-    // res.render('./pages/index.ejs');
+app.post('/generators', async(req,res)=>{
     texturl = req.body.texturl
-    data = { 
-        texturl: texturl,
-        isurl:isURL(texturl)
+    if(!isURL(texturl)){
+      res.render('./index',{shortUrls:false});
+    }else{
+      const shortUrls = await ShortUrlmodel.findOne({ full: texturl })
+      // console.log(shortUrls+"<<<<");
+      if(shortUrls == null){
+        let newshortUrls = await ShortUrlmodel.create({ full: texturl })
+        res.render('./index',{shortUrls:newshortUrls.short});
+        // console.log(newshortUrls.short+"dddddddddd");
+        // res.redirect('/')
+      }else{
+        // console.log(shortUrls);
+        res.render('./index',{shortUrls:shortUrls.short});
+      }
     }
-    res.render('./pages/index.ejs',data)
+   
+    
 
+    
 })
 
+app.get('/:shortid', async (req, res) => {
+  const shortUrl = await ShortUrlmodel.findOne({ short: req.params.shortid })
+  if (shortUrl == null) return res.sendStatus(404)
+  shortUrl.clicks++
+  shortUrl.save()
 
-
-// 
-
-
-// 
-
-
-
-
-
-
-
-
-
-
-
-
+  res.redirect(shortUrl.full)
+})
 
 
 
@@ -54,28 +60,7 @@ app.listen(port,()=>{
     console.log(`App listen port ${port}`);
 })
 
-// connect mongoDB
-var mongo = require('mongodb');
-var MongoClient = require('mongodb').MongoClient;
-var url = dburl;
-MongoClient.connect(url, function(err, db) {
-    if (err) throw err;
-    console.log("Database connect!");
-    var dbo = db.db("urlDB");
 
-
-// obj
-    var myobj = { name: "Company Inc", address: "Highway 37" };
-
-
-// insert
-    // dbo.collection("customers").insertOne(myobj, function(err, res) {
-    //   if (err) throw err;
-    //   console.log("1 document inserted");
-    //   db.close();
-
-    // });
-  });
 
 
   function isURL(str) {
@@ -87,3 +72,4 @@ MongoClient.connect(url, function(err, db) {
       '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
     return !!pattern.test(str);
   }
+

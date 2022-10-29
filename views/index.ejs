@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>URL </title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="css/style.css" rel="stylesheet" />
+        <script src="js/qrcode.min.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inconsolata&display=swap"
+            rel="stylesheet">
+
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+            crossorigin="anonymous">
+
+    </head>
+    <body>
+        <center>
+
+            <div class="contianer" style="width:80%;margin: 5%;"></div>
+            <h1>Short URL Generator</h1>
+
+            <form name="form1" method="post" action="/generators">
+                <input class="form-control" name="texturl" style="width:50%;"
+                    type="text"
+                    placeholder="https://www.google.com/search?q=google&oq=google+&aqs=chrome..69i57j35i39j69i60l4j69i65l2.1755j0j4&sourceid=chrome&ie=UTF-8">
+                <br>
+                <input type="submit" class="btn btn-dark"
+                    style="width:10%;height:4%;"
+                    value="Go!!">
+            </form>
+            <br>
+
+
+            <% if(shortUrls){ %>
+
+                <input type="text" class="form-control" id="urlval"
+                    style="width:30% ;" value="<%=
+                    `${shortUrls}` %>"
+                id="myInput" onchange="gennewqrcode()">
+                <br>
+                <div id="qrcode"></div>
+                <br>
+                <!-- <button onclick="copytext()">Copy text</button> -->
+                <!-- <div class="tooltip"> -->
+                <button onclick="copytext()" onmouseout="outFunc()">
+                    <span class="tooltiptext" id="myTooltip">Copy to
+                        clipboard</span>
+                </button>
+                <!-- </div> -->
+
+                <% }else{ %>
+                    <h3>...</h3>
+                    <% } %>
+                    </center>
+                </body>
+
+                <script>
+                // set url
+                let x = (window.location.href+"").replace("generators","")
+                //console.log(x+(document.getElementById("urlval").value));
+                document.getElementById("urlval").value = (x+(document.getElementById("urlval").value));
+                
+                var newurlshort = document.getElementById("urlval")
+                console.log(newurlshort+"<<newurlshort");
+                var qrcode = new QRCode(document.getElementById("qrcode"), {
+                    text: newurlshort.value,
+                    width: 128,
+                    height: 128,
+                    colorDark : "#000000",
+                    colorLight : "#ffffff",
+                    correctLevel : QRCode.CorrectLevel.H
+                });
+                
+                function gennewqrcode(){
+                    data = newurlshort.value;
+                    qrcode.makecode(data)
+                }
+
+                // for copy
+                function copytext() {
+                    var copyText = document.getElementById("urlval");
+                    copyText.select();
+                    copyText.setSelectionRange(0, 99999);
+                    navigator.clipboard.writeText(copyText.value);
+                    
+                    var tooltip = document.getElementById("myTooltip");
+                    tooltip.innerHTML = "Copied: " + copyText.value;
+                  }
+
+                  function outFunc() {
+                    var tooltip = document.getElementById("myTooltip");
+                    tooltip.innerHTML = "Copy to clipboard";
+                  }
+            </script>
+            </html>
