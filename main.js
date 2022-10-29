@@ -38,12 +38,15 @@ app.post('/generators', async(req,res)=>{
         // console.log(shortUrls);
         res.render('./index',{shortUrls:shortUrls.short});
       }
-    }
-   
-    
-
-    
+    } 
 })
+
+
+app.get('/tracker', async (req, res) => {
+  const shortUrls = await ShortUrlmodel.find()
+  res.render('./history',{URLTrackers:shortUrls})
+})
+
 
 app.get('/:shortid', async (req, res) => {
   const shortUrl = await ShortUrlmodel.findOne({ short: req.params.shortid })

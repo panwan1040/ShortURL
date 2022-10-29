@@ -4,69 +4,66 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>history</title>
+        <link href="css/style.css" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+            crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css"
+            href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css"/>
+        <script type="text/javascript"
+            src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script type="text/javascript"
+            src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+        <title>Tracker URL</title>
     </head>
+    <nav>
+        <ul>
+            <li><a href="/tracker">Tracker</a></li>
+            <li><a class="active" href="/">Short URL</a></li>
+        </ul>
+    </nav>
     <body>
-        <table class="table table-striped table-responsive">
-            <thead>
-                <tr>
-                    <th>Full URL</th>
-                    <th>Short URL</th>
-                    <th>Clicks</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% shortUrls.forEach(shortUrl=> { %>
+
+        <div class="container" style="margin: 0 auto;padding: 5%;">
+
+            <table id="showall">
+                <thead>
                     <tr>
-                        <td><a href="<%= shortUrl.full %>"><%= shortUrl.full %></a></td>
-                            <td><a href="<%= shortUrl.short %>"><%=
-                                        shortUrl.short %></a></td>
-                                <td><%= shortUrl.clicks %></td>
-                                </tr>
-                                <% }) %>
-                                </tbody>
-                            </table>
+                        <th>Full URL</th>
+                        <th>Short Code</th>
+                        <th>Clicks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% URLTrackers.forEach(tracker=> { %>
+                        <tr>
+                            <td>
+                                <a href="<%= tracker.full %>"><%= tracker.full
+                                        %></a>
+
+                                </td>
+                                <td>
+                                    <a href="<%= tracker.short %>"><%=
+                                            tracker.short %></a>
+
+                                    </td>
+                                    <td>
+                                        <%= tracker.clicks %>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+                            <script>
+                        $(document).ready( function () {
+                            $('#showall').DataTable();
+                        } );
+                       </script>
                         </body>
                     </html>
-
-
-
-
-
-
-
-
-
-
-
-                    <!--  -->
-
-
-                    <% if(shortUrls != null){ %>
-                        <table>
-                            <thead>
-                                <td>full link</td>
-                                <td>short link</td>
-                                <td>Clicks</td>
-                            </thead>
-                            <% for (let x in shortUrls) { %>
-
-
-                                <tr>
-                                    <td>
-                                        <a href="<%= shortUrls[x].full %>"><%=
-                                                shortUrls[x].full %></a>
-                                        </td>
-                                        <td>
-                                            <a href="<%= shortUrls[x].short %>"><%=
-                                                    shortUrls[x].short %></a>
-                                            </td>
-                                            <td>
-                                                <%= shortUrls[x].clicks %>
-                                                </td>
-                                            </tr>
-
-
-                                            <% } %>
-                                            </table>
-                                            <% } %>
