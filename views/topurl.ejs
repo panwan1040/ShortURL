@@ -26,18 +26,57 @@
         </ul>
     </nav>
     <body>
-        <div class="container" style="margin: 0 auto;padding: 5%;">
-            <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
-        </div>
-    </body>
-    <script>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <canvas id="myChart" style="width:70%;"></canvas>
+                </div>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <div class="col-sm">
+                    <br>
+                    <h2>Top 10</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">website</th>
+                                <th scope="col">clicks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% let number= 1 %>
+                                <% for (let item in data.sortdict) {%>
+                                    <tr>
+                                        <th scope="row"><%=number++ %> </th>
+                                            <td><%=item %> </td>
+                                                <td><%=data.sortdict[item] %>
+                                                    </td>
+                                                </tr>
+                                                <%
+                                                    if (number>10){ break;}
+                                                    %>
+                                                    <% } %>
+                                                    </tbody>
+                                                    <tr>
+
+                                                    </tr>
+                                                </table>
+
+                                            </div>
+
+                                        </div>
+
+                                        <h3></h3>
+                                    </div>
+                                </body>
+                                <script>
     function randomColor(){
         return 'rgb('+Math.round(Math.random()*255)+','+
         Math.round(Math.random()*255)+','+
         Math.round(Math.random()*255)+')';
          }
 </script>
-    <script>
+                                <script>
         var xValues = "<%= data.full%>".split(",") 
         var yValues = "<%= data.countclick %>".split(",") 
         var barColors = []
@@ -59,18 +98,20 @@
                 responsive: true,
                 plugins: {
                   legend: {
-                    position: 'top',
+                    position: 'bottom',
                     labels:{
                         font: {
-                            size: 14
+                            size: 16,
+                            family: 'Inconsolata'
                         }
                     }
                   },
                   title: {
                     display: true,
-                    text: 'All Click Link ',
+                    text: 'popular website ',
                     font:{
-                        size:30
+                        size:30,
+                        family: 'Inconsolata',
                     }
                     
                   }
@@ -81,4 +122,4 @@
 
          
     </script>
-</html>
+                            </html>

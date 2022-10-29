@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@700&display=swap');
 
-body{
+*{
 font-family: 'Inconsolata', monospace;
-color: rgb(252, 0, 0);
-background-color: antiquewhite;
+/* color: rgb(252, 0, 0); */
+/* background-color: antiquewhite; */
 }
 
 /* nav */

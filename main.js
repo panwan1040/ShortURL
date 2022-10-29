@@ -71,9 +71,25 @@ app.get('/topurl', async(req,res)=>{
       i++;
   }
   
-  // console.log(full);
-  // console.log(countclick);
-  res.render('./topurl',{data:{full:full,countclick:countclick}})
+  var dict = [];
+  full.forEach((item,index)=>{
+    dict.push([item,countclick[index]])
+
+  })
+
+  dict.sort(function(a, b) {
+    return b[1] - a[1];
+});
+
+let objSorted = {}
+dict.forEach(function(item){
+    objSorted[item[0]]=item[1]
+})
+console.log(objSorted);
+  
+ 
+  
+  res.render('./topurl',{data:{full:full,countclick:countclick,sortdict:objSorted}})
 })
 
 
