@@ -48,6 +48,35 @@ app.get('/tracker', async (req, res) => {
 })
 
 
+app.get('/topurl', async(req,res)=>{
+  const shortUrls = await ShortUrlmodel.find()
+  let full = []
+  let countclick = []
+  shortUrls.forEach(item => {
+    if(!full.includes(getbaseurl(item.full).replace("https://",""))){
+      full.push(getbaseurl(item.full).replace("https://",""))
+    }
+   
+  });
+  let i = 0
+  for (let item in full){
+      let count = 0
+      shortUrls.forEach(item =>{
+        if (full[i] == getbaseurl(item.full).replace("https://","")){
+          count += item.clicks;
+          // console.log("shuobj = "+ item.clicks);
+        }
+      });
+      countclick.push(count)
+      i++;
+  }
+  
+  // console.log(full);
+  // console.log(countclick);
+  res.render('./topurl',{data:{full:full,countclick:countclick}})
+})
+
+
 app.get('/:shortid', async (req, res) => {
   const shortUrl = await ShortUrlmodel.findOne({ short: req.params.shortid })
   if (shortUrl == null) return res.sendStatus(404)
@@ -75,4 +104,9 @@ app.listen(port,()=>{
       '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
     return !!pattern.test(str);
   }
+
+  function getbaseurl(str){
+    let url = new URL(str);
+    return url.origin;
+}
 

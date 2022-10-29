@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/style.css" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+            crossorigin="anonymous">
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"
+            integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <title>Top URL</title>
+    </head>
+    <nav>
+        <ul>
+            <li></li>
+            <li><a href="/topurl">Top URLs</a></li>
+            <li><a href="/tracker">Tracker</a></li>
+            <li><a class="active" href="/">Short URL</a></li>
+        </ul>
+    </nav>
+    <body>
+        <div class="container" style="margin: 0 auto;padding: 5%;">
+            <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+        </div>
+    </body>
+    <script>
+    function randomColor(){
+        return 'rgb('+Math.round(Math.random()*255)+','+
+        Math.round(Math.random()*255)+','+
+        Math.round(Math.random()*255)+')';
+         }
+</script>
+    <script>
+        var xValues = "<%= data.full%>".split(",") 
+        var yValues = "<%= data.countclick %>".split(",") 
+        var barColors = []
+        xValues.forEach((value, index, array) => {
+            barColors.push(randomColor())
+        })
+
+        // console.log(">>"+xValues+"<<"); 
+        new Chart("myChart", {
+            type: "doughnut",
+            data: {
+              labels: xValues,
+              datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+              }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                  legend: {
+                    position: 'top',
+                    labels:{
+                        font: {
+                            size: 14
+                        }
+                    }
+                  },
+                  title: {
+                    display: true,
+                    text: 'All Click Link ',
+                    font:{
+                        size:30
+                    }
+                    
+                  }
+                }
+              },
+          });
+        
+
+         
+    </script>
+</html>

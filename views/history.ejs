@@ -21,6 +21,7 @@
     </head>
     <nav>
         <ul>
+            <li><a href="/topurl">Top URLs</a></li>
             <li><a href="/tracker">Tracker</a></li>
             <li><a class="active" href="/">Short URL</a></li>
         </ul>
@@ -32,6 +33,7 @@
             <table id="showall">
                 <thead>
                     <tr>
+                        <th>Date</th>
                         <th>Full URL</th>
                         <th>Short Code</th>
                         <th>Clicks</th>
@@ -41,29 +43,33 @@
                     <% URLTrackers.forEach(tracker=> { %>
                         <tr>
                             <td>
-                                <a href="<%= tracker.full %>"><%= tracker.full
-                                        %></a>
-
+                                <%= tracker.dateAdd %>
                                 </td>
                                 <td>
-                                    <a href="<%= tracker.short %>"><%=
-                                            tracker.short %></a>
+                                    <a href="<%= tracker.full %>"><%=
+                                            tracker.full
+                                            %></a>
 
                                     </td>
                                     <td>
-                                        <%= tracker.clicks %>
+                                        <a href="<%= tracker.short %>"><%=
+                                                tracker.short %></a>
+
                                         </td>
-                                    </tr>
-                                    <% }) %>
-                                    </tbody>
+                                        <td>
+                                            <%= tracker.clicks %>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                        </tbody>
 
-                                </table>
+                                    </table>
 
-                            </div>
-                            <script>
+                                </div>
+                                <script>
                         $(document).ready( function () {
                             $('#showall').DataTable();
                         } );
                        </script>
-                        </body>
-                    </html>
+                            </body>
+                        </html>
