@@ -1,4 +1,3 @@
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
 const ShortUrlmodel = require('./models/shortUrl')
 const express = require("express")
@@ -85,7 +84,7 @@ let objSorted = {}
 dict.forEach(function(item){
     objSorted[item[0]]=item[1]
 })
-console.log(objSorted);
+
   
  
   
