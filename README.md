@@ -1,7 +1,8 @@
 # ShortURL
 # Test Synerry Corporation
-#
-#
+
+
+
 ## Features
 
 -  เมื่อกรอก url สร้าง short url และ qrcode
@@ -12,7 +13,8 @@
 
 ## Installation
 สามารถติดตั้งตามขั้นตอนนี้หรือทดลองใช้ได้ที่ [คลิก]
-#
+
+
 ติดตั้ง nodejs, vscode และเปิดโฟลเดอร์โปรเจคขึ้นมา
 
 ```sh
