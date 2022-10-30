@@ -23,6 +23,10 @@ app.get('/',async(req,res)=>{
 
 app.post('/generators', async(req,res)=>{
     texturl = req.body.texturl
+    if(!texturl.includes("https://")){
+      texturl = "https://"+texturl
+    }
+   console.log(isURL(texturl));
     if(!isURL(texturl)){
       res.render('./index',{shortUrls:false});
     }else{
@@ -111,17 +115,36 @@ app.listen(port,()=>{
 
 
   function isURL(str) {
-    var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+    try{
+      getbaseurl(str)
+      var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
       '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
       '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
       '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
       '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
       '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
     return !!pattern.test(str);
+    }catch(err) {
+      console.log(err);
+      return false
+    }
+    
   }
 
   function getbaseurl(str){
-    let url = new URL(str);
-    return url.origin;
+    if(str.includes("https://")){
+        let url = new URL(str);
+        // console.log(url);
+        return url.origin;
+    }else {
+        let url = new URL("https://"+str);
+        return url.origin;
+    }
+    
 }
+//   function getbaseurl(str){
+//     let url = new URL(str);
+//     // console.log(url+"<<url");
+//     return url.origin;
+// }
 
