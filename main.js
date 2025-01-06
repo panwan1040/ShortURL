@@ -9,7 +9,9 @@ const dburl = process.env.DBURL;
 
 app.use(express.urlencoded({ extended: false }));
 app.set('view engine', 'ejs');
-app.use(express.static(__dirname + '/public'));
+const path = require('path');
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 // Connect to MongoDB
 mongoose.connect(dburl, { useNewUrlParser: true, useUnifiedTopology: true })
